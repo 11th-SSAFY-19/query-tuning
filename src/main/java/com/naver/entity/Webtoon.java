@@ -42,4 +42,7 @@ public class Webtoon {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id")
 	private Author author;
+
+	@Column(name = "noYouth")
+	private boolean noYouth;
 }

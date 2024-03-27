@@ -13,28 +13,30 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Star")
-public class Star {
+@Table(name = "Recomment")
+public class Recomment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "star_id")
-	private Long starId;
+	@Column(name = "recomment_id")
+	private Long recommentId;
 
-	@Column(name = "score")
-	private Float score;
+	@Column(name = "content")
+	private String content;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "comment_id")
+	private Comment comment;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "episode_id")
-	private Episode episode;
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	// Getters and setters
 }

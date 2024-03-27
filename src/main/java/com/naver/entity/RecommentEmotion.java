@@ -13,20 +13,20 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ReComment")
-public class ReComment {
+@Table(name = "RecommentEmotion")
+public class RecommentEmotion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "recomment_id")
-	private Long recommentId;
+	@Column(name = "recomment_emotion_id")
+	private Long recommentEmotionId;
 
-	@Column(name = "content")
-	private String content;
+	@Column(name = "emotion_status", columnDefinition = "TINYINT(1)")
+	private Boolean emotionStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "comment_id")
-	private Comment comment;
+	@JoinColumn(name = "recomment_id")
+	private Recomment reComment;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
