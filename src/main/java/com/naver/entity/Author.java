@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "Author")
 public class Author {
@@ -26,4 +28,12 @@ public class Author {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	@Builder
+	public Author(Long authorId, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.authorId = authorId;
+		this.name = name;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }

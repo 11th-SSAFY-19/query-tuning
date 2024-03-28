@@ -27,6 +27,9 @@ public class Member {
 	@Column(name = "password")
 	private String password;
 
+	@Column(name = "nickname")
+	private String name;
+
 	@Column(name = "age")
 	private Integer age;
 

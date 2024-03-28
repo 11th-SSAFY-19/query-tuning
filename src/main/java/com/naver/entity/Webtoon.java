@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "Webtoon")
 public class Webtoon {
@@ -42,4 +44,17 @@ public class Webtoon {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id")
 	private Author author;
+
+	@Builder
+	public Webtoon(Long webtoonId, String title, String thumbnail, String description, String publicationStatus,
+		LocalDateTime createdAt, LocalDateTime updatedAt, Author author) {
+		this.webtoonId = webtoonId;
+		this.title = title;
+		this.thumbnail = thumbnail;
+		this.description = description;
+		this.publicationStatus = publicationStatus;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.author = author;
+	}
 }
