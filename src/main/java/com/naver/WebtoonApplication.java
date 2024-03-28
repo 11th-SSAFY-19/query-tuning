@@ -1,5 +1,6 @@
 package com.naver;
 
+import com.naver.generator.CommentGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +9,10 @@ public class WebtoonApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebtoonApplication.class, args);
+		CommentGenerator.comment();
+		CommentGenerator.comment();
+		CommentGenerator.comment();
+		CommentGenerator.comment();
 	}
 
 }
