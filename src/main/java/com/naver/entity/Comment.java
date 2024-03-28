@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity
 @Table(name = "Comment")
@@ -37,4 +38,12 @@ public class Comment {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	public Long getCommentId() {
+		return commentId;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 }
