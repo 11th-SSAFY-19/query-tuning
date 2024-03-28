@@ -48,4 +48,8 @@ public class Recomment {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+
+	public Recomment() {
+
+	}
 }
