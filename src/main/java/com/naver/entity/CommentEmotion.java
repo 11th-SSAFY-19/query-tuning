@@ -37,4 +37,12 @@ public class CommentEmotion {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	public CommentEmotion(Boolean emotionStatus, Comment comment, Member member, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.emotionStatus = emotionStatus;
+		this.comment = comment;
+		this.member = member;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }

@@ -1,11 +1,7 @@
 package com.naver.generator;
 
-import com.naver.entity.Comment;
-import com.naver.entity.Member;
-import com.naver.entity.Recomment;
-import com.naver.repository.CommentRepository;
-import com.naver.repository.MemberRepository;
-import com.naver.repository.RecommentRepository;
+import com.naver.entity.*;
+import com.naver.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,12 +19,16 @@ public class CommentGenerator {
     private final CommentRepository commentRepository;
     private final MemberGenerator memberGenerator;
     private  final RecommentRepository recommentRepository;
+    private  final CommentEmotionRepository commentEmotionRepository;
+    private  final RecommentEmotionRepository recommentEmotionRepository;
 
     @Autowired
-    public CommentGenerator(CommentRepository commentRepository, MemberGenerator memberGenerator, RecommentRepository recommentRepository) {
+    public CommentGenerator(CommentRepository commentRepository, MemberGenerator memberGenerator, RecommentRepository recommentRepository, CommentEmotionRepository commentEmotionRepository, RecommentEmotionRepository recommentEmotionRepository) {
         this.commentRepository = commentRepository;
         this.memberGenerator = memberGenerator;
         this.recommentRepository = recommentRepository;
+        this.commentEmotionRepository = commentEmotionRepository;
+        this.recommentEmotionRepository = recommentEmotionRepository;
     }
 
     static String[] sample0 = {"오","오잉 ","짧지만","","","와 ","아...", "","아니 ", "젠장", "진짜 ", "근데 ", "zzzzzzz", "ㅋㅋㅋㅋㅋㅋㅋㅋ", "??:", "앜ㅋㅋㅋㅋㅋㅋ", "이런 ", ""};
@@ -68,4 +68,47 @@ public class CommentGenerator {
             System.out.println("id");
         }
     }
+
+    public void saveCommentEmotion(Comment comment) {
+        Random random = new Random();
+        int limit = 10;
+        int memberCnt = random.nextInt(limit);
+        if(memberCnt == 0) return;
+        List<Member> members = memberGenerator.randomMembers(memberCnt);
+
+        int likeCnt = random.nextInt(memberCnt);
+        for(int i = 0; i < likeCnt; i++){
+            LocalDateTime createdDate = RandomGenerator.generateLocalDateTime(comment.getCreatedAt(), comment.getCreatedAt().plus(100, ChronoUnit.DAYS));
+            commentEmotionRepository.save(new CommentEmotion(true, comment, members.get(i), createdDate, createdDate));
+        }
+        for(int i = likeCnt; i < memberCnt; i++){
+            LocalDateTime createdDate = RandomGenerator.generateLocalDateTime(comment.getCreatedAt(), comment.getCreatedAt().plus(100, ChronoUnit.DAYS));
+            commentEmotionRepository.save(new CommentEmotion(false, comment, members.get(i), createdDate, createdDate));
+        }
+    }
+
+    public void saveRecommentEmotion(Recomment recomment) {
+        Random random = new Random();
+        // commentEmotion 개수 가져오기
+        int commentLike = commentEmotionRepository.countByCommentId(recomment.getCommentId());
+        int memberCnt = random.nextInt(commentLike);
+        if(memberCnt == 0) return; // 그냥 저장안하고 나오기
+
+        // 감정 표시할 멤버리스트 가져오기
+        List<Member> members = memberGenerator.randomMembers(memberCnt);
+
+        // 좋아요
+        int likeCnt = random.nextInt(memberCnt);
+        for(int i = 0; i < likeCnt; i++){
+            LocalDateTime createdDate = RandomGenerator.generateLocalDateTime(recomment.getCreatedAt(), recomment.getCreatedAt().plus(100, ChronoUnit.DAYS));
+            recommentEmotionRepository.save(new RecommentEmotion(true, recomment, members.get(i), createdDate, createdDate));
+        }
+        // 싫어요
+        for(int i = likeCnt; i < memberCnt; i++){
+            LocalDateTime createdDate = RandomGenerator.generateLocalDateTime(recomment.getCreatedAt(), recomment.getCreatedAt().plus(100, ChronoUnit.DAYS));
+            recommentEmotionRepository.save(new RecommentEmotion(false, recomment, members.get(i), createdDate, createdDate));
+        }
+    }
+
+
 }

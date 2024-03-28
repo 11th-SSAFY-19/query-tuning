@@ -40,6 +40,15 @@ public class Recomment {
 
 	// Getters and setters
 
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public Long getCommentId() {
+		return comment.getCommentId();
+	}
+
 	public Recomment(String content, Comment comment, Member member, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		//this.recommentId = recommentId;
 		this.content = content;

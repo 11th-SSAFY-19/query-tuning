@@ -5,6 +5,7 @@ import com.naver.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -38,5 +39,9 @@ public class MemberGenerator {
     public Member randomMemberExcept(Long exceptId) {
         long memberID = randomMemberIdExcept(exceptId);
         return memberRepository.findMemberByMemberId(memberID);
+    }
+
+    public List<Member> randomMembers(int n){
+        return RandomGenerator.selectNRandom(memberRepository.findAll() , n);
     }
 }
