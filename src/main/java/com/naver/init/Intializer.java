@@ -1,10 +1,15 @@
 package com.naver.init;
 
+import com.naver.entity.Episode;
 import com.naver.entity.HashTag;
 import com.naver.entity.Member;
+import com.naver.entity.Webtoon;
 import com.naver.generate.MemberGenerator;
+import com.naver.generator.RandomGenerator;
+import com.naver.repository.EpisodeRepository;
 import com.naver.repository.HashTagRepository;
 import com.naver.repository.MemberRepository;
+import com.naver.repository.WebtoonRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +21,45 @@ import org.springframework.stereotype.Component;
 public class Intializer implements ApplicationRunner {
     private final MemberRepository memberRepository;
     private final HashTagRepository hashTagRepository;
+    private final WebtoonRepository webtoonRepository;
+    private final EpisodeRepository episodeRepository;
 
-    public Intializer(MemberRepository memberRepository, HashTagRepository hashTagRepository) {
+    public Intializer(MemberRepository memberRepository, HashTagRepository hashTagRepository,
+                      WebtoonRepository webtoonRepository, EpisodeRepository episodeRepository) {
         this.memberRepository = memberRepository;
         this.hashTagRepository = hashTagRepository;
+        this.webtoonRepository = webtoonRepository;
+        this.episodeRepository = episodeRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+    }
 
+    private void saveEpisode() {
+        List<Webtoon> webtoonList = webtoonRepository.findAll();
+        LocalDateTime endTime = LocalDateTime.of(2024, 3, 29, 0, 0, 0);
+
+        for (Webtoon w : webtoonList) {
+            String title = w.getTitle();
+            LocalDateTime episodeCreatedAt = w.getCreatedAt();
+
+            List<Episode> episodeList = new ArrayList<>();
+            int cnt = 1;
+            while(episodeCreatedAt.isBefore(endTime)) {
+                episodeList.add(Episode.builder()
+                        .title(title + " " + cnt + "화")
+                        .webtoon(w)
+                        .createdAt(episodeCreatedAt)
+                        .updatedAt(episodeCreatedAt)
+                        .viewCount(0)
+                        .build());
+                ++cnt;
+                episodeCreatedAt = episodeCreatedAt.plusDays(7);
+            }
+
+            episodeRepository.saveAll(episodeList);
+        }
     }
 
     private void saveMember() {
