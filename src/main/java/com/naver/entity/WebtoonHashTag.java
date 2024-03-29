@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Builder.ObtainVia;
 
 @Entity
 @Table(name = "WebtoonHashTag")
@@ -34,4 +36,14 @@ public class WebtoonHashTag {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	@Builder
+	private WebtoonHashTag(Long webtoonHashtagId, HashTag hashtag, Webtoon webtoon, LocalDateTime createdAt,
+						  LocalDateTime updatedAt) {
+		this.webtoonHashtagId = webtoonHashtagId;
+		this.hashtag = hashtag;
+		this.webtoon = webtoon;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }

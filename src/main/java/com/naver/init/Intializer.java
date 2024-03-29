@@ -4,11 +4,13 @@ import com.naver.entity.Episode;
 import com.naver.entity.HashTag;
 import com.naver.entity.Member;
 import com.naver.entity.Webtoon;
+import com.naver.entity.WebtoonHashTag;
 import com.naver.generate.MemberGenerator;
 import com.naver.generator.RandomGenerator;
 import com.naver.repository.EpisodeRepository;
 import com.naver.repository.HashTagRepository;
 import com.naver.repository.MemberRepository;
+import com.naver.repository.WebtoonHashTagRepository;
 import com.naver.repository.WebtoonRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,18 +25,44 @@ public class Intializer implements ApplicationRunner {
     private final HashTagRepository hashTagRepository;
     private final WebtoonRepository webtoonRepository;
     private final EpisodeRepository episodeRepository;
+    private final WebtoonHashTagRepository webtoonHashTagRepository;
 
     public Intializer(MemberRepository memberRepository, HashTagRepository hashTagRepository,
-                      WebtoonRepository webtoonRepository, EpisodeRepository episodeRepository) {
+                      WebtoonRepository webtoonRepository, EpisodeRepository episodeRepository,
+                      WebtoonHashTagRepository webtoonHashTagRepository) {
         this.memberRepository = memberRepository;
         this.hashTagRepository = hashTagRepository;
         this.webtoonRepository = webtoonRepository;
         this.episodeRepository = episodeRepository;
+        this.webtoonHashTagRepository = webtoonHashTagRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
     }
+
+    private void saveWebtoonHashTag() {
+        List<HashTag> hashTagList = hashTagRepository.findAll();
+        List<Webtoon> webtoonList = webtoonRepository.findAll();
+        List<WebtoonHashTag> webtoonHashTagList = new ArrayList<>();
+
+        for (Webtoon w : webtoonList) {
+            LocalDateTime createdAt = w.getCreatedAt();
+
+            List<HashTag> webtoonHashTag = RandomGenerator.selectNRandom(hashTagList, 2);
+            for (HashTag hashTag : webtoonHashTag) {
+                webtoonHashTagList.add(WebtoonHashTag.builder()
+                        .webtoon(w)
+                        .hashtag(hashTag)
+                        .createdAt(createdAt)
+                        .updatedAt(createdAt)
+                        .build());
+            }
+        }
+
+        webtoonHashTagRepository.saveAll(webtoonHashTagList);
+    }
+
 
     private void saveEpisode() {
         List<Webtoon> webtoonList = webtoonRepository.findAll();
