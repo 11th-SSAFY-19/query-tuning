@@ -22,7 +22,7 @@ public class Rate {
 	private Long rateId;
 
 	@Column(name = "score")
-	private Float score;
+	private Integer score;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
@@ -37,4 +37,12 @@ public class Rate {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	public Rate(Integer score, Member member, Episode episode, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.score = score;
+		this.member = member;
+		this.episode = episode;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }
