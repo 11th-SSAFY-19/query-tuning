@@ -1,5 +1,6 @@
 package com.naver.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -14,11 +15,13 @@ import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Webtoon")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Webtoon {
 
 	@Id

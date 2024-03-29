@@ -34,11 +34,6 @@ class CommentGeneratorTest {
         this.memberGenerator = memberGenerator;
     }
 
-    //@Test
-    void comment() {
-        commentGenerator.comment();
-
-    }
 
     //@Test
     void recomment() {

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.naver.entity.PublishingDay;
 import com.naver.entity.Webtoon;
 import com.naver.entity.WebtoonPublishingDay;
 import com.naver.generator.RandomGenerator;
@@ -55,8 +56,10 @@ public class FileService {
 				} else {
 					status = "연재중";
 				}
+				System.out.println(day);
 
-				System.out.println(titleName);
+				PublishingDay byDay = publishingDayRepository.findByDay(day);
+
 				LocalDateTime startDate
 					= LocalDateTime.of(2018, 1, 1, 0, 0, 0);
 				LocalDateTime endDate
@@ -65,6 +68,7 @@ public class FileService {
 				LocalDateTime generatedTime = randomGenerator.generateLocalDateTime(startDate, endDate);
 				LocalDateTime endGeneratedTime = randomGenerator.generateLocalDateTime(startDate, endDate);
 
+				System.out.println(byDay);
 				// Webtoon 객체를 생성하여 리스트에 추가
 				generatedTime = randomGenerator.generateLocalDateTime(startDate, endDate);
 				endGeneratedTime = randomGenerator.generateLocalDateTime(endDate.minusDays(7L), LocalDateTime.now());
@@ -82,7 +86,7 @@ public class FileService {
 				LocalDateTime now = LocalDateTime.now();
 				WebtoonPublishingDay webtoonPublishingDay = WebtoonPublishingDay
 					.builder()
-					.publishingDay(publishingDayRepository.findByDay(day))
+					.publishingDay(byDay)
 					.webtoon(savedWebtoon)
 					.createdAt(now)
 					.updatedAt(now)
