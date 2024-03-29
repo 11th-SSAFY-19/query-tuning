@@ -11,9 +11,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Episode")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Episode {
 
 	@Id
@@ -23,12 +27,6 @@ public class Episode {
 
 	@Column(name = "title")
 	private String title;
-
-	@Column(name = "content")
-	private String content;
-
-	@Column(name = "note")
-	private String note;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "webtoon_id")
@@ -43,13 +41,14 @@ public class Episode {
 	@Column(name = "view_count")
 	private Integer viewCount;
 
-	@Column(name = "public_status")
-	private Boolean publicStatus;
-
-	@Column(name = "required_cookie")
-	private Integer requiredCookie;
-
-	@Column(name = "free_release_date")
-	private LocalDateTime freeReleaseDate;
-
+	@Builder
+	private Episode(Long episodeId, String title, Webtoon webtoon, LocalDateTime createdAt, LocalDateTime updatedAt,
+					Integer viewCount) {
+		this.episodeId = episodeId;
+		this.title = title;
+		this.webtoon = webtoon;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.viewCount = viewCount;
+	}
 }

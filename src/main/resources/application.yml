@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/webtoon?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&autoReconnect=true
     username: root
-    password: 3025894kK^^
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

@@ -61,4 +61,8 @@ public class Recomment {
 	public Recomment() {
 
 	}
+
+	public Comment getComment() {
+		return comment;
+	}
 }
