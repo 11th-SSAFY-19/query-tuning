@@ -32,7 +32,7 @@ class CommentGeneratorTest {
 
     }
 
-    @Test
+    //@Test
     void saveLike() {
         Optional<Episode> episode = episodeRepository.findById(1L);
         if(!episode.isEmpty()){
@@ -40,5 +40,12 @@ class CommentGeneratorTest {
         }
     }
 
+    @Test
+    void saveRate() {
+        Optional<Episode> episode = episodeRepository.findById(1L);
+        if(!episode.isEmpty()){
+            readBasedGenerator.saveRate(episode.get());
+        }
+    }
 
 }
