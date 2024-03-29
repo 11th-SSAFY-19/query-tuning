@@ -7,9 +7,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
+      ddl-auto: update
     show-sql: true
+    format_sql: true
+    database: mysql
 
 logging:
   level:
