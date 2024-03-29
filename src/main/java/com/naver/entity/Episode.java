@@ -43,7 +43,7 @@ public class Episode {
 
 	@Builder
 	private Episode(Long episodeId, String title, Webtoon webtoon, LocalDateTime createdAt, LocalDateTime updatedAt,
-				   Integer viewCount) {
+					Integer viewCount) {
 		this.episodeId = episodeId;
 		this.title = title;
 		this.webtoon = webtoon;
