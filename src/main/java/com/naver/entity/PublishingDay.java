@@ -39,4 +39,14 @@ public class PublishingDay {
 		this.updatedAt = updatedAt;
 		this.day = day;
 	}
+
+	@Override
+	public String toString() {
+		return "PublishingDay{" +
+			"publishingDayId=" + publishingDayId +
+			", createdAt=" + createdAt +
+			", updatedAt=" + updatedAt +
+			", day='" + day + '\'' +
+			'}';
+	}
 }
