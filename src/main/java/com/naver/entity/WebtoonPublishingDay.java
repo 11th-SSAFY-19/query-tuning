@@ -12,8 +12,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "WebtoonPublishingDay")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WebtoonPublishingDay {
 
 	@Id
@@ -34,4 +39,14 @@ public class WebtoonPublishingDay {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	@Builder
+	public WebtoonPublishingDay(Long webtoonPublishingDayId, PublishingDay publishingDay, Webtoon webtoon,
+		LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.webtoonPublishingDayId = webtoonPublishingDayId;
+		this.publishingDay = publishingDay;
+		this.webtoon = webtoon;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }

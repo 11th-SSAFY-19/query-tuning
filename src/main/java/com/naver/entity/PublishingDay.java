@@ -9,8 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "PublishingDay")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PublishingDay {
 
 	@Id
@@ -27,5 +32,11 @@ public class PublishingDay {
 	@Column(name = "day")
 	private String day;
 
-	// Getters and setters
+	@Builder
+	public PublishingDay(Long publishingDayId, LocalDateTime createdAt, LocalDateTime updatedAt, String day) {
+		this.publishingDayId = publishingDayId;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.day = day;
+	}
 }

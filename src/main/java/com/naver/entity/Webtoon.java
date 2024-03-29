@@ -12,8 +12,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "Webtoon")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Webtoon {
 
 	@Id
@@ -39,10 +44,19 @@ public class Webtoon {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "author_id")
-	private Author author;
-
-	@Column(name = "noYouth")
+	@Column(name = "noYouth", columnDefinition = "TINYINT(1)")
 	private boolean noYouth;
+
+	@Builder
+	public Webtoon(Long webtoonId, String title, String thumbnail, String description, String publicationStatus,
+		LocalDateTime createdAt, LocalDateTime updatedAt, boolean noYouth) {
+		this.webtoonId = webtoonId;
+		this.title = title;
+		this.thumbnail = thumbnail;
+		this.description = description;
+		this.publicationStatus = publicationStatus;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.noYouth = noYouth;
+	}
 }
