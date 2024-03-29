@@ -48,6 +48,10 @@ public class Comment {
 		return createdAt;
 	}
 
+	public Episode getEpisode() {
+		return episode;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
@@ -55,4 +59,11 @@ public class Comment {
 		return Objects.equals(commentId, comment.commentId);
 	}
 
+	public Comment(String content, Member member, Episode episode, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.content = content;
+		this.member = member;
+		this.episode = episode;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }
