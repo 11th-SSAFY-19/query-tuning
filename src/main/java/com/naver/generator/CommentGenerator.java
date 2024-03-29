@@ -102,7 +102,7 @@ public class CommentGenerator {
         if(memberCnt == 0) return;
 
         // 해당 에피소드를 본 유저 중에서 랜덤으로 댓글 작성자 찾기
-        List<Member> members = memberGenerator.randomEpisodeMembers(n, comment.getEpisode().getEpisodeId());
+        List<Member> members = memberGenerator.randomEpisodeMembers(memberCnt, comment.getEpisode().getEpisodeId());
 
         int likeCnt = random.nextInt(memberCnt);
         for(int i = 0; i < likeCnt; i++){
