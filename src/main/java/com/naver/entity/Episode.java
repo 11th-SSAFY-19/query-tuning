@@ -51,4 +51,12 @@ public class Episode {
 		this.updatedAt = updatedAt;
 		this.viewCount = viewCount;
 	}
+
+	public Long getEpisodeId() {
+		return episodeId;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 }
