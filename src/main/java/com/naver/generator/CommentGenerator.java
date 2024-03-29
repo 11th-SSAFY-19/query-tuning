@@ -48,6 +48,14 @@ public class CommentGenerator {
         return comment;
     }
 
+    public void saveComment(Episode episode) {
+        // 해당 에피소드를 본 유저 중에서 랜덤으로 댓글 작성자 찾기
+        // List<Member> mebers
+
+        // 읽은 날짜보다 늦게 createdDate 만들기
+    }
+
+    // 전체 코멘트 리스트에 대한 대댓글 생성
     public void recomment() {
         Random random = new Random();
         //List<Long> commentIds = commentRepository.findAllCommentIds();
@@ -64,16 +72,33 @@ public class CommentGenerator {
 
                 recommentRepository.save(new Recomment(recomment, comment, member, createdDate, createdDate));
             }
-
-            System.out.println("id");
         }
     }
 
+    // 특정 코멘트에 대한 recomment 생성하기
+    public void saveRecomment(Comment comment) {
+        Random random = new Random();
+        int recommentCnt = random.nextInt(1)+1;
+
+        for(int i = 0; i < recommentCnt; i++){
+            System.out.println(comment.getCommentId());
+            String recomment = comment();
+            Member member = memberGenerator.randomMemberExcept(comment.getCommentId());
+
+            LocalDateTime createdDate = RandomGenerator.generateLocalDateTime(comment.getCreatedAt(), comment.getCreatedAt().plus(100, ChronoUnit.DAYS));
+
+            recommentRepository.save(new Recomment(recomment, comment, member, createdDate, createdDate));
+        }
+    }
+
+    // 코멘트에 대한 감정 넣기
     public void saveCommentEmotion(Comment comment) {
         Random random = new Random();
         int limit = 10;
         int memberCnt = random.nextInt(limit);
         if(memberCnt == 0) return;
+
+        // 본웹툰테이블에서 멤버 랜덤 생성하는걸로 수정 필요
         List<Member> members = memberGenerator.randomMembers(memberCnt);
 
         int likeCnt = random.nextInt(memberCnt);
@@ -87,6 +112,7 @@ public class CommentGenerator {
         }
     }
 
+    // 대댓글 감정 넣기
     public void saveRecommentEmotion(Recomment recomment) {
         Random random = new Random();
         // commentEmotion 개수 가져오기
@@ -94,7 +120,7 @@ public class CommentGenerator {
         int memberCnt = random.nextInt(commentLike);
         if(memberCnt == 0) return; // 그냥 저장안하고 나오기
 
-        // 감정 표시할 멤버리스트 가져오기
+        // 감정 표시할 멤버리스트 가져오기 -> 본웹툰에서 가져오는걸로 변경 필요
         List<Member> members = memberGenerator.randomMembers(memberCnt);
 
         // 좋아요
