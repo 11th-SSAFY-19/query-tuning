@@ -39,7 +39,6 @@ public class Intializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        saveWebtoonHashTag();
     }
 
     private void saveWebtoonHashTag() {
