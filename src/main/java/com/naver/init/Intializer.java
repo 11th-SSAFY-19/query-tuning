@@ -39,6 +39,7 @@ public class Intializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        saveEpisode();
     }
 
     private void saveWebtoonHashTag() {
@@ -66,7 +67,6 @@ public class Intializer implements ApplicationRunner {
 
     private void saveEpisode() {
         List<Webtoon> webtoonList = webtoonRepository.findAll();
-        LocalDateTime endTime = LocalDateTime.of(2024, 3, 29, 0, 0, 0);
 
         for (Webtoon w : webtoonList) {
             String title = w.getTitle();
@@ -74,7 +74,8 @@ public class Intializer implements ApplicationRunner {
 
             List<Episode> episodeList = new ArrayList<>();
             int cnt = 1;
-            while(episodeCreatedAt.isBefore(endTime)) {
+            LocalDateTime finishedWebtoonEndTime = w.getUpdatedAt();
+            while(episodeCreatedAt.isBefore(finishedWebtoonEndTime)) {
                 episodeList.add(Episode.builder()
                         .title(title + " " + cnt + "화")
                         .webtoon(w)
