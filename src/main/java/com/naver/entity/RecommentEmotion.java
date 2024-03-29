@@ -39,4 +39,13 @@ public class RecommentEmotion {
 	private LocalDateTime updatedAt;
 
 	// Getters and setters
+
+
+	public RecommentEmotion(Boolean emotionStatus, Recomment reComment, Member member, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.emotionStatus = emotionStatus;
+		this.reComment = reComment;
+		this.member = member;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }
