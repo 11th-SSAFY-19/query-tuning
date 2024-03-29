@@ -38,4 +38,27 @@ public class Member {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	public Member(String loginId, String password, String nickname, Integer age, LocalDateTime createdAt,
+				  LocalDateTime updatedAt) {
+		this.loginId = loginId;
+		this.password = password;
+		this.nickname = nickname;
+		this.age = age;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	@Override
+	public String toString() {
+		return "Member{" +
+				"memberId=" + memberId +
+				", loginId='" + loginId + '\'' +
+				", password='" + password + '\'' +
+				", nickname='" + nickname + '\'' +
+				", age=" + age +
+				", createdAt=" + createdAt +
+				", updatedAt=" + updatedAt +
+				'}';
+	}
 }
