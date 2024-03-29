@@ -52,4 +52,11 @@ public class Episode {
 	@Column(name = "free_release_date")
 	private LocalDateTime freeReleaseDate;
 
+	public Long getEpisodeId() {
+		return episodeId;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 }

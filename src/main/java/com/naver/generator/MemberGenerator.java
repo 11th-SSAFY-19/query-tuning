@@ -2,6 +2,7 @@ package com.naver.generator;
 
 import com.naver.entity.Member;
 import com.naver.repository.MemberRepository;
+import com.naver.repository.ReadEpisodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,12 @@ import java.util.Random;
 public class MemberGenerator {
 
     private final MemberRepository memberRepository;
+    private final ReadEpisodeRepository readEpisodeRepository;
 
     @Autowired
-    public MemberGenerator(MemberRepository memberRepository) {
+    public MemberGenerator(MemberRepository memberRepository, ReadEpisodeRepository readEpisodeRepository) {
         this.memberRepository = memberRepository;
+        this.readEpisodeRepository = readEpisodeRepository;
     }
 
     public Long randomMemberId() {
@@ -43,5 +46,10 @@ public class MemberGenerator {
 
     public List<Member> randomMembers(int n){
         return RandomGenerator.selectNRandom(memberRepository.findAll() , n);
+    }
+
+    public List<Member> randomEpisodeMembers(int n, Long episodeId) {
+        List<Member> members = readEpisodeRepository.findByEpisode(episodeId);
+        return RandomGenerator.selectNRandom(members , n);
     }
 }

@@ -1,8 +1,4 @@
--- MySQL dump 10.13  Distrib 8.3.0, for macos13.6 (x86_64)
---
--- Host: localhost    Database: webtoon
--- ------------------------------------------------------
--- Server version	8.3.0
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;

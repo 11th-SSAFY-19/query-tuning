@@ -1,19 +1,18 @@
 package com.naver.generator;
 
 import com.naver.entity.Comment;
+import com.naver.entity.Member;
 import com.naver.entity.Recomment;
 import com.naver.repository.CommentEmotionRepository;
 import com.naver.repository.CommentRepository;
+import com.naver.repository.ReadEpisodeRepository;
 import com.naver.repository.RecommentRepository;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CommentGeneratorTest {
@@ -22,13 +21,17 @@ class CommentGeneratorTest {
     private final CommentRepository commentRepository;
     private final CommentEmotionRepository commentEmotionRepository;
     private final RecommentRepository recommentRepository;
+    private final ReadEpisodeRepository readEpisodeRepository;
+    private final MemberGenerator memberGenerator;
 
     @Autowired
-    public CommentGeneratorTest(CommentGenerator commentGenerator, CommentRepository commentRepository, CommentEmotionRepository commentEmotionRepository, RecommentRepository recommentRepository) {
+    public CommentGeneratorTest(CommentGenerator commentGenerator, CommentRepository commentRepository, CommentEmotionRepository commentEmotionRepository, RecommentRepository recommentRepository, ReadEpisodeRepository readEpisodeRepository, MemberGenerator memberGenerator) {
         this.commentGenerator = commentGenerator;
         this.commentRepository = commentRepository;
         this.commentEmotionRepository = commentEmotionRepository;
         this.recommentRepository = recommentRepository;
+        this.readEpisodeRepository = readEpisodeRepository;
+        this.memberGenerator = memberGenerator;
     }
 
     //@Test
@@ -51,11 +54,28 @@ class CommentGeneratorTest {
 
     }
 
-    @Test
+    //@Test
     void saveRecommentEmotion()  {
         Optional<Recomment> recomment = recommentRepository.findById(1L);
         if(!recomment.isEmpty()){
             commentGenerator.saveRecommentEmotion(recomment.get());
         }
     }
+
+    //@Test
+    void listReadEpisode() {
+        List<Member> memberIds = readEpisodeRepository.findByEpisode(1L);
+        for (Member m : memberIds) {
+            System.out.println("member: "+m.getMemberId());
+
+        }
+
+        List<Member> members = memberGenerator.randomEpisodeMembers(5, 1L);
+        for (Member m : members) {
+            System.out.println("member: "+m.getMemberId());
+
+        }
+    }
+
+
 }
