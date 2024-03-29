@@ -18,6 +18,8 @@ import com.naver.repository.WebtoonRepository;
 
 @Service
 public class FileService {
+	private static final String FINISH = "완결";
+	private static final String ING = "연재중";
 	private final RandomGenerator randomGenerator;
 	private final WebtoonRepository webtoonRepository;
 	private final PublishingDayRepository publishingDayRepository;
@@ -46,15 +48,14 @@ public class FileService {
 				String[] data = line.split(cvsSplitBy);
 
 				String titleName = data[2];
-				String thumbnailUrl = data[3];
 				boolean isAdult = Boolean.parseBoolean(data[7]);
 				boolean isFinished = Boolean.parseBoolean(data[13]);
 				String day = data[15];
 				String status = "";
 				if (isFinished) {
-					status = "완결";
+					status = FINISH;
 				} else {
-					status = "연재중";
+					status = ING;
 				}
 				System.out.println(day);
 
@@ -76,7 +77,6 @@ public class FileService {
 				Webtoon webtoon = Webtoon.builder()
 					.title(titleName)
 					.noYouth(isAdult)
-					.thumbnail(thumbnailUrl)
 					.createdAt(generatedTime)
 					.updatedAt(endGeneratedTime)
 					.publicationStatus(status)

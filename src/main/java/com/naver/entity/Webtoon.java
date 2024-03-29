@@ -29,12 +29,6 @@ public class Webtoon {
 	@Column(name = "title")
 	private String title;
 
-	@Column(name = "thumbnail")
-	private String thumbnail;
-
-	@Column(name = "description")
-	private String description;
-
 	@Column(name = "publication_status")
 	private String publicationStatus;
 
@@ -48,12 +42,10 @@ public class Webtoon {
 	private boolean noYouth;
 
 	@Builder
-	public Webtoon(Long webtoonId, String title, String thumbnail, String description, String publicationStatus,
+	public Webtoon(Long webtoonId, String title, String publicationStatus,
 		LocalDateTime createdAt, LocalDateTime updatedAt, boolean noYouth) {
 		this.webtoonId = webtoonId;
 		this.title = title;
-		this.thumbnail = thumbnail;
-		this.description = description;
 		this.publicationStatus = publicationStatus;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
