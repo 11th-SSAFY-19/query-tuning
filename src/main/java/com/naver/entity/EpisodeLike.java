@@ -36,4 +36,11 @@ public class EpisodeLike {
 	private LocalDateTime updatedAt;
 
 	// Getters and setters
+
+	public EpisodeLike(Member member, Episode episode, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.member = member;
+		this.episode = episode;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }
