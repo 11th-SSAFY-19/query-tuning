@@ -1,6 +1,7 @@
 package com.naver.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity
 @Table(name = "Comment")
@@ -37,4 +39,20 @@ public class Comment {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	public Long getCommentId() {
+		return commentId;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		Comment comment = (Comment) o;
+		return Objects.equals(commentId, comment.commentId);
+	}
+
 }

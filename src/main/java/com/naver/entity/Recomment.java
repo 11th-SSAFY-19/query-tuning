@@ -39,4 +39,26 @@ public class Recomment {
 	private LocalDateTime updatedAt;
 
 	// Getters and setters
+
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public Long getCommentId() {
+		return comment.getCommentId();
+	}
+
+	public Recomment(String content, Comment comment, Member member, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		//this.recommentId = recommentId;
+		this.content = content;
+		this.comment = comment;
+		this.member = member;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public Recomment() {
+
+	}
 }
