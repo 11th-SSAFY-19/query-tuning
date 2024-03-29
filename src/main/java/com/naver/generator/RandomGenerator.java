@@ -7,7 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomGenerator {
 	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	private static final String EXTENDED_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-	private static SecureRandom random = new SecureRandom();
+	private static final SecureRandom random = new SecureRandom();
+
+	private RandomGenerator() {
+	}
 
 	public static LocalDateTime generateLocalDateTime(LocalDateTime startDate, LocalDateTime endDate) {
 		long startEpochSecond = startDate.toEpochSecond(java.time.ZoneOffset.UTC);

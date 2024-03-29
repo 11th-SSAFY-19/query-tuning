@@ -1,19 +1,15 @@
 package com.naver.entity;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-import lombok.Getter;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Member")
-@Getter
 public class Member {
 
 	@Id
@@ -60,5 +56,33 @@ public class Member {
 				", createdAt=" + createdAt +
 				", updatedAt=" + updatedAt +
 				'}';
+	}
+
+	public Long getMemberId() {
+		return memberId;
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
 }
