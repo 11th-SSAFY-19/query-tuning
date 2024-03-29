@@ -85,10 +85,10 @@ public class RandomGenerator {
 	}
 
 	/**
-	 * min 이상 max 이하 숫자를 랜덤으로 선택하여 반환한다.
+	 * min 이상 max 미만 숫자를 랜덤으로 선택하여 반환한다.
 	 * @param min
 	 * @param max
-	 * @return min 이상 max 이하 숫자
+	 * @return min 이상 max 미만 숫자
 	 */
 	public static int generateRandomNumber(int min, int max) {
 		return random.nextInt(max - min) + min;
