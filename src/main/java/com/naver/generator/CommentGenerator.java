@@ -54,7 +54,7 @@ public class CommentGenerator {
     public void saveComment(Episode episode) {
         Random random = new Random();
         // 댓글 갯수
-        int limit = 1;
+        int limit = 4;
         int n = random.nextInt(limit);
 
         // 해당 에피소드를 본 유저 중에서 랜덤으로 댓글 작성자 찾기
@@ -77,8 +77,8 @@ public class CommentGenerator {
     // 특정 코멘트에 대한 recomment 생성하기
     public void saveRecomment(Comment comment) {
         Random random = new Random();
-        int limit = 1;
-        int n = random.nextInt(limit)+1;
+        int limit = 4;
+        int n = random.nextInt(limit);
 
         // 해당 에피소드를 본 유저 중에서 랜덤으로 댓글 작성자 찾기
         List<Member> members = memberGenerator.randomEpisodeMembers(n, comment.getEpisode().getEpisodeId());
@@ -97,7 +97,7 @@ public class CommentGenerator {
     // 코멘트에 대한 감정 넣기
     public void saveCommentEmotion(Comment comment) {
         Random random = new Random();
-        int limit = 1;
+        int limit = 4;
         int memberCnt = random.nextInt(limit);
         if(memberCnt == 0) return;
 
