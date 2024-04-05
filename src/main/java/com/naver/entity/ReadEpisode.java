@@ -19,7 +19,7 @@ import lombok.Builder;
 public class ReadEpisode {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "read_episode_id")
 	private Long readEpisodeId;
 

@@ -40,11 +40,15 @@ public class WebtoonAboutGenerator {
 		// 웹툰에 대한 에피소드 뽑아내기
 		for (Webtoon webtoon : all) {
 			List<Episode> episodes = episodeRepository.findByWebtoon(webtoon);
-			int minPeople = RandomGenerator.generateRandomNumber(200, 1500);
+//			int minPeople = RandomGenerator.generateRandomNumber(20, 150);
+//			int minPeople = RandomGenerator.generateRandomNumber(2, 15);
+//			int minPeople = RandomGenerator.generateRandomNumber(1, 5);
 
 			for (Episode episode : episodes) {
-				int plus = RandomGenerator.generateRandomNumber(0, 100);
-				List<Member> members = memberGenerator.randomMembers(minPeople + plus);
+//				int plus = RandomGenerator.generateRandomNumber(0, 100);
+				int plus = RandomGenerator.generateRandomNumber(0, 5);
+//				List<Member> members = memberGenerator.randomMembers(minPeople + plus);
+				List<Member> members = memberGenerator.randomMembers(plus);
 				for (Member member : members) {
 					LocalDateTime createdAt = episode.getCreatedAt();
 					LocalDateTime updatedAt = RandomGenerator.generateLocalDateTime(createdAt,
@@ -63,9 +67,11 @@ public class WebtoonAboutGenerator {
 
 	public void generateRandom() {
 		List<Webtoon> all = webtoonRepository.findAll();
-		int minPeople = RandomGenerator.generateRandomNumber(200, 1500);
+		int minPeople = RandomGenerator.generateRandomNumber(20, 150);
+//		int minPeople = RandomGenerator.generateRandomNumber(1, 5);
 		// 웹툰에 대한 에피소드 뽑아내기
 		for (Webtoon webtoon : all) {
+			System.out.println("webtoon: " + webtoon.getWebtoonId());
 			int plus = RandomGenerator.generateRandomNumber(0, 100);
 			List<Member> members = memberGenerator.randomMembers(minPeople + plus);
 			for (Member member : members) {
