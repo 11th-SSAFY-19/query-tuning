@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "ReadEpisode")
 public class ReadEpisode {
@@ -29,12 +31,20 @@ public class ReadEpisode {
 	@JoinColumn(name = "episode_id")
 	private Episode episode;
 
-	@Column(name = "recently_read")
-	private Boolean recentlyRead;
-
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	@Builder
+	public ReadEpisode(Long readEpisodeId, Member member, Episode episode,
+		LocalDateTime createdAt,
+		LocalDateTime updatedAt) {
+		this.readEpisodeId = readEpisodeId;
+		this.member = member;
+		this.episode = episode;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }

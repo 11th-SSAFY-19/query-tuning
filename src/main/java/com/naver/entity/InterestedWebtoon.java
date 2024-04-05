@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "InterestedWebtoon")
 public class InterestedWebtoon {
@@ -34,4 +36,14 @@ public class InterestedWebtoon {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	@Builder
+	public InterestedWebtoon(Long interestedWebtoonId, Webtoon webtoon, Member member, LocalDateTime createdAt,
+		LocalDateTime updatedAt) {
+		this.interestedWebtoonId = interestedWebtoonId;
+		this.webtoon = webtoon;
+		this.member = member;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }
