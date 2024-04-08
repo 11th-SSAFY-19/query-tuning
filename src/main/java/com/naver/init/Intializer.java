@@ -4,6 +4,7 @@ import com.naver.entity.Episode;
 import com.naver.entity.HashTag;
 import com.naver.entity.Member;
 import com.naver.entity.PublishingDay;
+import com.naver.entity.ReadEpisode;
 import com.naver.entity.Webtoon;
 import com.naver.entity.WebtoonHashTag;
 import com.naver.entity.WebtoonPublishingDay;
@@ -17,12 +18,14 @@ import com.naver.repository.PublishingDayRepository;
 import com.naver.repository.WebtoonHashTagRepository;
 import com.naver.repository.WebtoonPublishingDayRepository;
 import com.naver.repository.WebtoonRepository;
+import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,12 +39,14 @@ public class Intializer implements ApplicationRunner {
     private final WebtoonPublishingDayRepository webtoonPublishingDayRepository;
     private final PublishingDayRepository publishingDayRepository;
     private final WebtoonAboutGenerator webtoonAboutGenerator;
+    private final JdbcTemplate jdbcTemplate;
 
     public Intializer(MemberRepository memberRepository, HashTagRepository hashTagRepository,
                       WebtoonRepository webtoonRepository, EpisodeRepository episodeRepository,
                       WebtoonHashTagRepository webtoonHashTagRepository,
                       WebtoonPublishingDayRepository webtoonPublishingDayRepository,
-                      PublishingDayRepository publishingDayRepository, WebtoonAboutGenerator webtoonAboutGenerator) {
+                      PublishingDayRepository publishingDayRepository, WebtoonAboutGenerator webtoonAboutGenerator,
+                      JdbcTemplate jdbcTemplate) {
         this.memberRepository = memberRepository;
         this.hashTagRepository = hashTagRepository;
         this.webtoonRepository = webtoonRepository;
@@ -50,10 +55,12 @@ public class Intializer implements ApplicationRunner {
         this.webtoonPublishingDayRepository = webtoonPublishingDayRepository;
         this.publishingDayRepository = publishingDayRepository;
         this.webtoonAboutGenerator = webtoonAboutGenerator;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        generateRandomReadWebtoon();
     }
 
     /**
@@ -66,8 +73,33 @@ public class Intializer implements ApplicationRunner {
     /**
      * 본 웹툰 등록
      */
-    private void generateRandomReadWebtoon() {
-        webtoonAboutGenerator.generateRandomReadWebtoon();
+    @Transactional
+    public void generateRandomReadWebtoon() {
+        List<ReadEpisode> readEpisodes = webtoonAboutGenerator.generateRandomReadWebtoon();
+        System.out.println("bulk insert start: " + readEpisodes.size());
+
+        long start = System.nanoTime();
+        saveReadEpisodeAll(readEpisodes);
+        System.out.println(System.nanoTime() - start + "ns");
+    }
+
+    private void saveReadEpisodeAll(List<ReadEpisode> list) {
+        memberRepository.findAll();
+        episodeRepository.findAll();
+        String sql = "INSERT INTO read_episode (episode_id, member_id, created_at, updated_at)" +
+                "VALUES (?, ?, ?, ?)";
+
+        jdbcTemplate.batchUpdate(sql,
+                list,
+                list.size(),
+                (PreparedStatement ps, ReadEpisode e) -> {
+                    for (int i = 1; i <= list.size(); i++) {
+                        ps.setLong(1, e.getEpisode().getEpisodeId());
+                        ps.setLong(2, e.getMember().getMemberId());
+                        ps.setObject(3, e.getCreatedAt());
+                        ps.setObject(4, e.getUpdatedAt());
+                    }
+                });
     }
 
     /**
@@ -129,7 +161,7 @@ public class Intializer implements ApplicationRunner {
             List<Episode> episodeList = new ArrayList<>();
             int cnt = 1;
             LocalDateTime finishedWebtoonEndTime = w.getUpdatedAt();
-            while(episodeCreatedAt.isBefore(finishedWebtoonEndTime)) {
+            while (episodeCreatedAt.isBefore(finishedWebtoonEndTime)) {
                 episodeList.add(Episode.builder()
                         .title(title + " " + cnt + "화")
                         .webtoon(w)
