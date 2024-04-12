@@ -13,13 +13,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.Builder;
+import lombok.Getter;
 
 @Entity
 @Table(name = "ReadEpisode")
+@Getter
 public class ReadEpisode {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "read_episode_id")
 	private Long readEpisodeId;
 
