@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface EpisodeRepository extends JpaRepository<Episode, Long> {
+
 	@Query("select e from Episode e where e.webtoon =:webtoon")
 	List<Episode> findByWebtoon(@Param("webtoon") Webtoon webtoon);
 }
