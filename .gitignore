@@ -8,6 +8,11 @@
 build
 .idea/
 .gradle/
+src/main/resources/privacy.yml
+.classpath
+.project
+bin
+.settings
 
 # User-specific stuff
 .idea/**/workspace.xml

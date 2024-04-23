@@ -10,5 +10,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
     database: mysql
+    
+#logging:
+#  level: 
+#    org: 
+#      springframework:
+#        jdbc: 
+#          core: trace
+    
